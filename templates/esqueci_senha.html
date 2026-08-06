@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrar - Sistema de Chamados</title>
+    <title>Esqueci minha senha - Sistema de Chamados</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="pagina-auth">
     <div class="auth-wrapper">
         <div class="auth-card">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Marista" class="auth-logo-img">
-            <h1 class="auth-logo">Sistema de Chamados</h1>
-            <p class="auth-subtitulo">Entre com sua conta para continuar</p>
+            <h1 class="auth-logo">Esqueci minha senha</h1>
+            <p class="auth-subtitulo">
+                Informe o e-mail cadastrado. Se ele existir no sistema, enviaremos uma
+                nova senha de acesso para essa caixa de entrada.
+            </p>
 
             {% with mensagens = get_flashed_messages(with_categories=true) %}
                 {% if mensagens %}
@@ -25,21 +28,14 @@
 
             <form method="post" class="formulario">
                 <div class="campo">
-                    <label for="email">E-mail</label>
+                    <label for="email">E-mail cadastrado</label>
                     <input type="email" id="email" name="email" required autofocus>
                 </div>
-                <div class="campo">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" required>
-                </div>
-                <button type="submit" class="btn btn-primario btn-full">Entrar</button>
+                <button type="submit" class="btn btn-primario btn-full">Enviar nova senha</button>
             </form>
 
             <p class="auth-rodape">
-                <a href="{{ url_for('esqueci_senha') }}">Esqueci minha senha</a>
-            </p>
-            <p class="auth-rodape">
-                Ainda não tem conta? <a href="{{ url_for('registrar') }}">Criar conta</a>
+                <a href="{{ url_for('login') }}">&larr; Voltar para o login</a>
             </p>
         </div>
     </div>

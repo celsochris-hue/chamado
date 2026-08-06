@@ -34,11 +34,13 @@
             <ul class="lista-anexos">
                 {% for anexo in chamado.anexos %}
                 <li>
-                    <a href="{{ url_for('download_anexo', nome_arquivo=anexo.nome_arquivo) }}" target="_blank">{{ anexo.nome_original }}</a>
+                    <a href="{{ url_for('download_anexo', chamado_id=chamado.id, anexo_id=anexo.id) }}" target="_blank">{{ anexo.nome_original }}</a>
                     <span class="data-anexo">{{ anexo.data_upload.strftime('%d/%m/%Y %H:%M') }}</span>
+                    {% if pode_gerenciar %}
                     <form method="post" action="{{ url_for('excluir_anexo', chamado_id=chamado.id, anexo_id=anexo.id) }}" onsubmit="return confirm('Remover este anexo?');" class="form-inline">
                         <button type="submit" class="btn-excluir-anexo" title="Remover anexo">✕</button>
                     </form>
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>
@@ -46,10 +48,14 @@
             <p class="texto-vazio">Nenhum anexo enviado ainda.</p>
             {% endif %}
 
+            {% if pode_gerenciar %}
             <form method="post" action="{{ url_for('anexar_arquivo', chamado_id=chamado.id) }}" enctype="multipart/form-data" class="form-anexo">
                 <input type="file" name="anexos" multiple required>
                 <button type="submit" class="btn btn-secundario">Adicionar Anexo</button>
             </form>
+            {% else %}
+            <p class="texto-vazio" style="margin-top:10px;">Apenas técnicos/administradores podem adicionar novos anexos após a abertura do chamado.</p>
+            {% endif %}
         </div>
 
         <div class="painel">
@@ -73,6 +79,7 @@
     </div>
 
     <div class="coluna-lateral">
+        {% if pode_gerenciar %}
         <div class="painel">
             <h3>Responsável Técnico</h3>
             <form method="post" action="{{ url_for('atribuir_responsavel', chamado_id=chamado.id) }}">
@@ -117,6 +124,17 @@
                 <button type="submit" class="btn btn-perigo btn-full">Excluir Chamado</button>
             </form>
         </div>
+        {% else %}
+        <div class="painel">
+            <h3>Acompanhamento</h3>
+            <p class="texto-vazio">
+                Este chamado está sendo tratado pela equipe técnica. Você pode acompanhar
+                o status atual e o histórico de atualizações ao lado, mas apenas técnicos
+                e administradores podem alterar o status, atribuir um responsável ou
+                excluir o chamado.
+            </p>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

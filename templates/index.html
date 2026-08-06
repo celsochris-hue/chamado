@@ -3,12 +3,18 @@
 
 {% block conteudo %}
 <div class="cabecalho-pagina">
-    <h1>Chamados e Demandas</h1>
+    <h1>Chamados</h1>
     <div class="acoes-exportar">
         <a href="{{ url_for('exportar_excel', status=status_filtro, busca=busca) }}" class="btn btn-secundario">⬇ Excel</a>
         <a href="{{ url_for('exportar_pdf', status=status_filtro, busca=busca) }}" class="btn btn-secundario">⬇ PDF</a>
     </div>
 </div>
+
+{% if current_user.papel == "usuario" %}
+<p class="texto-vazio" style="margin: -10px 0 16px;">
+    Mostrando apenas os chamados que você mesmo abriu.
+</p>
+{% endif %}
 
 <div class="resumo-cards">
     <a href="{{ url_for('index', status='Todos') }}" class="card-resumo {{ 'ativo' if status_filtro == 'Todos' }}">
