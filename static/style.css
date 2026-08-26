@@ -96,7 +96,13 @@ body {
 
 /* Páginas de autenticação (login / registro) */
 .pagina-auth {
-    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    background:
+        linear-gradient(135deg, rgba(10, 20, 40, 0.72) 0%, rgba(10, 30, 55, 0.72) 100%),
+        url("/static/img/bg-login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     align-items: center;
